@@ -21,7 +21,7 @@ alias la='ls -alF --color=auto'
 alias ll='ls -A --color=auto'
 alias l='ls -CF --color=auto'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
+alias tb="nc termbin.com 9999"
 
 autoload -U colors && colors
 #Prompt
