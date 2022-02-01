@@ -1,5 +1,5 @@
 "Vim Wishlist ---------------------------------------------
-"Comprhend linters, and why we should want them.
+"Comprehend linters, and why we should want them.
 
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -13,7 +13,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'ycm-core/youcompleteme'
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 "Plug 'tpope/vim-fugitive'
 "Plug 'sheerun/vim-polyglot'
@@ -64,7 +63,11 @@ let g:NERDCreateDefaultMappings = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 let g:NERDCompactSexyComs = 1
+
 let g:floaterm_keymap_toggle = '<F1>'
+map <F12> :FloatermKill!<CR> \| :wq<CR>
+map <F11> :FloatermKill!<CR> \| :q!<CR>
+
 
 "Commands --------------------------------------------------
 
