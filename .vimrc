@@ -15,7 +15,7 @@ Plug 'ycm-core/youcompleteme'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 "Plug 'tpope/vim-fugitive'
-"Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 "Plug 'tpope/vim-projectionist'
 
 call plug#end()
@@ -24,6 +24,7 @@ call plug#end()
 
 syntax on
 filetype plugin on
+set nocompatible
 set encoding=utf-8
 set nu
 set nowrap
@@ -51,6 +52,7 @@ highlight vimVar ctermfg=41
 set completeopt-=preview
 "Inits Floaterm
 autocmd VimEnter * :FloatermNew! --silent cd %:p:h 
+autocmd VimEnter * :call term_setkill(2, "kill")
 
 "Mappings --------------------------------------------------
 
@@ -79,4 +81,3 @@ set statusline=
 set statusline+=\
 
 "Plugin Configs --------------------------------------------
-
