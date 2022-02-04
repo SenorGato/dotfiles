@@ -1,5 +1,12 @@
 "Vim Wishlist ---------------------------------------------
 "Comprehend linters, and why we should want them.
+"Html tag completion
+"Fix code completion/snippets
+"Set floaterm to open in ROOT
+"Write hotkey that runs a webserver in the ROOT directory and hides the term
+"Fuzzy finder, and better search capabilities
+"How to open function/class defs in other files(Preview?)
+"Rebind ESC to CapsLock
 
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -11,12 +18,15 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'leafgarland/typescript-vim'
 Plug 'voldikss/vim-floaterm'
-Plug 'ycm-core/youcompleteme'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-"Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
-"Plug 'tpope/vim-projectionist'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'tpope/vim-fugitive'
+"Plug 'ycm-core/youcompleteme'
 
 call plug#end()
 
@@ -39,20 +49,27 @@ set ignorecase
 set smartcase
 set hlsearch
 set history=200
+
 "Splits end in new window
 set splitbelow
 set splitright
+
 "Colorscheme stuff
 colorscheme desert 
 set background=dark
 highlight LineNr ctermfg=140
-highlight Normal ctermfg=105
+highlight Normal ctermfg=105 ctermbg=234
 highlight vimVar ctermfg=41
+highlight Pmenu ctermbg=234 ctermfg=105
+
 "Turns off preview in youcomplete
 set completeopt-=preview
+
 "Inits Floaterm
-autocmd VimEnter * :FloatermNew! --silent cd %:p:h 
+autocmd VimEnter * :FloatermNew! --silent cd %:p:h | clear 
 autocmd VimEnter * :call term_setkill(2, "kill")
+"autocmd VimEnter FileType javascript,html,css,typescript :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
+"autocmd VimEnter * :call term_setkill(3, "kill")
 
 "Mappings --------------------------------------------------
 
@@ -70,14 +87,40 @@ let g:floaterm_keymap_toggle = '<F1>'
 map <F12> :FloatermKill!<CR> \| :wq<CR>
 map <F11> :FloatermKill!<CR> \| :q!<CR>
 
+"Paren completion
+inoremap { {<CR>}<Esc>ko
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
+
+let g:lsp_document_highlight_enabled = 0
+nnoremap <leader>lo :LspPeekDefinition<cr>
+nnoremap <leader>lp :LspPeekDeclaration<cr>
+nnoremap <leader>li :LspPeekTypeDefinition<cr>
+nnoremap <leader>le :LspNextError<cr>
+nnoremap <leader>lw :LspNextWarning<cr>
+nnoremap <leader>lpw :LspPreviousWarning<cr>
+nnoremap <leader>lpe :LspPreviousError<cr>
+nnoremap <leader>lh :LspHover<CR>
+
+"The following line fixes a bug where :LspHover remaps <Esc> in insert mode
+nmap <plug>() <Plug>(lsp-float-close)
+
+
+"inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+
+"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 "Commands --------------------------------------------------
 
 command! SS echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
+
 "Status ----------------------------------------------------
 
 set statusline=
 set statusline+=\
-
-"Plugin Configs --------------------------------------------
