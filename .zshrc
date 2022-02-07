@@ -15,7 +15,8 @@ compinit
 
 #Aliases
 
-# alias ls="sl" - Uncommentting this will break these aliases.  Fix it.
+#alias ls="sl" - Uncommentting this will break these aliases.  Fix it.
+#ls () { command sl "$@" ;}
 alias ls='ls -h --color=auto'
 alias la='ls -alF --color=auto'
 alias ll='ls -A --color=auto'

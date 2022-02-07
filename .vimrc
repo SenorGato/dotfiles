@@ -15,16 +15,16 @@ Plug 'vim-airline/vim-airline'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'leafgarland/typescript-vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'sheerun/vim-polyglot'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'prabirshrestha/vim-lsp'
+"Plug 'mattn/vim-lsp-settings'
+"Plug 'prabirshrestha/asyncomplete.vim'
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "Plug 'tpope/vim-fugitive'
 "Plug 'ycm-core/youcompleteme'
 
@@ -67,9 +67,7 @@ set completeopt-=preview
 
 "Inits Floaterm
 autocmd VimEnter * :FloatermNew! --silent cd %:p:h | clear 
-autocmd VimEnter * :call term_setkill(2, "kill")
 "autocmd VimEnter FileType javascript,html,css,typescript :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
-"autocmd VimEnter * :call term_setkill(3, "kill")
 
 "Mappings --------------------------------------------------
 
