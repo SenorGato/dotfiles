@@ -66,12 +66,15 @@ highlight Pmenu ctermbg=234 ctermfg=105
 set completeopt-=preview
 
 "Inits Floaterm
-autocmd VimEnter * :FloatermNew! --silent cd %:p:h | clear 
+autocmd VimEnter * :FloatermNew! --silent --height=46 --position=right --width=0.4 cd %:p:h | clear 
+autocmd BufWrite *.cpp :FloatermSend --silent make
 "autocmd VimEnter FileType javascript,html,css,typescript :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
 
 "Mappings --------------------------------------------------
 
 let mapleader = " "
+
+tnoremap <ESC> <C-\><C-n>
 
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFocus<CR>
