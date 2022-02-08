@@ -33,7 +33,7 @@ PS1="%T%{$fg[magenta]%}|%n%{$reset_color%}@%{$fg[blue]%}%m|%{$fg[green]%}%~%{$re
 #Env Vars
 export LANG=en_US.UTF-8
 export TERM=rxvt-unicode
-export PATH=/home/senoraraton/.sdkman/candidates/gradle/current/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/include:/home/senoraraton/.cabal/bin:/home/senoraraton/.ghcup/bin:/usr/local/lib:/usr/lib
+export PATH=/home/senoraraton/.sdkman/candidates/gradle/current/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/include:/home/senoraraton/.cabal/bin:/home/senoraraton/.ghcup/bin:/usr/local/lib:/usr/lib:/home/senoraraton/.local/bin
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export GOPATH=/home/senoraraton/.config/go
 export PATH="$PATH:$HOME/.config/go/bin"

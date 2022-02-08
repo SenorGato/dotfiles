@@ -15,14 +15,16 @@ Plug 'vim-airline/vim-airline'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-"Plug 'scrooloose/syntastic'
 Plug 'leafgarland/typescript-vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'sheerun/vim-polyglot'
-"Plug 'prabirshrestha/vim-lsp'
-"Plug 'mattn/vim-lsp-settings'
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc'
+"Plug 'scrooloose/syntastic'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "Plug 'tpope/vim-fugitive'
@@ -65,10 +67,10 @@ highlight Pmenu ctermbg=234 ctermfg=105
 "Turns off preview in youcomplete
 set completeopt-=preview
 
-"Inits Floaterm
+"Floaterm Inits
 autocmd VimEnter * :FloatermNew! --silent --height=46 --position=right --width=0.4 cd %:p:h | clear 
-autocmd BufWrite *.cpp :FloatermSend --silent make
-"autocmd VimEnter FileType javascript,html,css,typescript :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
+autocmd VimEnter *.js,*.html,*.css,*.ts :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
+autocmd BufWrite *.cpp,*h :FloatermSend --silent make
 
 "Mappings --------------------------------------------------
 
@@ -90,13 +92,17 @@ map <F11> :FloatermKill!<CR> \| :q!<CR>
 
 "Paren completion
 inoremap { {<CR>}<Esc>ko
+inoremap {{ {}<Esc>ha
 inoremap ( ()<Esc>ha
 inoremap [ []<Esc>ha
 inoremap " ""<Esc>ha
 inoremap ' ''<Esc>ha
 inoremap ` ``<Esc>ha
 
-let g:lsp_document_highlight_enabled = 0
+nnoremap <Leader>ss :SaveSession<CR> 
+nnoremap <Leader>os :OpenSession<CR>
+
+let g:lsp_document_highlight_enabled = 1 
 nnoremap <leader>lo :LspPeekDefinition<cr>
 nnoremap <leader>lp :LspPeekDeclaration<cr>
 nnoremap <leader>li :LspPeekTypeDefinition<cr>
@@ -125,3 +131,41 @@ command! SS echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 
 set statusline=
 set statusline+=\
+
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader> rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup ENDf
