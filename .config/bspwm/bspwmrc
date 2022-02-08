@@ -2,20 +2,38 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+
+multibar(){
+    pkill polybar
+    while pgrep -x polybar >/dev/null; do sleep 1; done
+    xrandr -q | awk '/ connected / {print $1}' | while read -r monitor _; do
+    polybar -r "$monitor" &
+done
+}
+multibar &
+#   What are the differences between this and ^^^
+#   killall -q polybar
+#   while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+
+
+
+polybar main && polybar main &
 monitor1_desktops=( desk1 desk2 desk3 desk4 desk5 desk6 desk7 )
 monitor2_desktops=( desk8 desk9 desk10)
 
 bspc monitor primary -d "${monitor1_desktops[@]}"
 bspc monitor 'primary#next' -d "${monitor2_desktops[@]}" || bspc monitor primary -a "${monitor2_desktops[@]}"
 
-bspc config border_width         0
-bspc config window_gap           0 
+bspc config border_width         3 
+bspc config window_gap           3 
+bspc config focused_border_color "##e89309"
+bspc config normal_border_color "#202A25"
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.50
+bspc config click_to_focus true
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
-bspc config focused_border_color "#26F0F1"
-bspc config normal_border_color "#202A25"
 
 bspc rule -r '*'
 

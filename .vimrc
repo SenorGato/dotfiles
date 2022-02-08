@@ -2,11 +2,8 @@
 "Comprehend linters, and why we should want them.
 "Html tag completion
 "Fix code completion/snippets
-"Set floaterm to open in ROOT
-"Write hotkey that runs a webserver in the ROOT directory and hides the term
 "Fuzzy finder, and better search capabilities
 "How to open function/class defs in other files(Preview?)
-"Rebind ESC to CapsLock
 
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -22,9 +19,10 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'sheerun/vim-polyglot'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
+Plug 'puremourning/vimspector'
 "Plug 'scrooloose/syntastic'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+"Plug 'prabirshrestha/vim-lsp'
+"Plug 'mattn/vim-lsp-settings'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "Plug 'tpope/vim-fugitive'
@@ -37,6 +35,7 @@ call plug#end()
 syntax on
 filetype plugin on
 set nocompatible
+
 set encoding=utf-8
 set nu
 set nowrap
@@ -51,6 +50,7 @@ set ignorecase
 set smartcase
 set hlsearch
 set history=200
+set path +=**
 
 "Splits end in new window
 set splitbelow
@@ -68,9 +68,9 @@ highlight Pmenu ctermbg=234 ctermfg=105
 set completeopt-=preview
 
 "Floaterm Inits
-autocmd VimEnter * :FloatermNew! --silent --height=46 --position=right --width=0.4 cd %:p:h | clear 
-autocmd VimEnter *.js,*.html,*.css,*.ts :FloatermNew! --silent --cwd=<root> python3 -m http.server 8000
-autocmd BufWrite *.cpp,*h :FloatermSend --silent make
+autocmd VimEnter * :FloatermNew! --silent --name=main --height=46 --position=right --width=0.4 cd %:p:h | clear 
+autocmd VimEnter *.js,*.html,*.css,*.ts :FloatermNew! --silent --name=webserve --cwd=<root> python3 -m http.server 8000
+autocmd BufWrite *.cpp,*h :FloatermSend --silent --name=main make
 
 "Mappings --------------------------------------------------
 
@@ -87,8 +87,6 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDCompactSexyComs = 1
 
 let g:floaterm_keymap_toggle = '<F1>'
-map <F12> :FloatermKill!<CR> \| :wq<CR>
-map <F11> :FloatermKill!<CR> \| :q!<CR>
 
 "Paren completion
 inoremap { {<CR>}<Esc>ko
@@ -101,6 +99,7 @@ inoremap ` ``<Esc>ha
 
 nnoremap <Leader>ss :SaveSession<CR> 
 nnoremap <Leader>os :OpenSession<CR>
+:let g:session_autosave = 'no'
 
 let g:lsp_document_highlight_enabled = 1 
 nnoremap <leader>lo :LspPeekDefinition<cr>
