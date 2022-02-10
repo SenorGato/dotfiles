@@ -2,8 +2,7 @@
 "Comprehend linters, and why we should want them.
 "Html tag completion
 "Fix code completion/snippets
-"Fuzzy finder, and better search capabilities
-"How to open function/class defs in other files(Preview?)
+"Folding
 
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -11,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'voldikss/vim-floaterm'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
+Plug 'valloric/youcompleteme'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'leafgarland/typescript-vim'
@@ -19,16 +19,12 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'sheerun/vim-polyglot'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
-"Plug 'BurntSushi/ripgrep'
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'nvim-telescope/telescope.nvim'
-"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'BurntSushi/ripgrep'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do' : 'make'}
 "Plug 'tpope/vim-fugitive'
-"Plug 'ycm-core/youcompleteme'
 
 call plug#end()
 
@@ -105,49 +101,61 @@ nnoremap <Leader>ss :SaveSession<CR>
 nnoremap <Leader>os :OpenSession<CR>
 :let g:session_autosave = 'no'
 
-let g:lsp_document_highlight_enabled = 1 
-nnoremap <leader>lo :LspPeekDefinition<cr>
-nnoremap <leader>lp :LspPeekDeclaration<cr>
-nnoremap <leader>li :LspPeekTypeDefinition<cr>
+nnoremap <leader>lo :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>lp :YcmCompleter GoToDecleration<cr>
+nnoremap <leader>li :YcmCompleter GetType<cr>
+nnoremap <leader>lh :YcmCompleter GoToInclude<cr>
+nnoremap <leader>lu :YcmCompleter GoToReferences<CR>
 nnoremap <leader>le :LspNextError<cr>
 nnoremap <leader>lw :LspNextWarning<cr>
 nnoremap <leader>lpw :LspPreviousWarning<cr>
 nnoremap <leader>lpe :LspPreviousError<cr>
-nnoremap <leader>lh :LspHover<CR>
-
-"The following line fixes a bug where :LspHover remaps <Esc> in insert mode
-nmap <plug>() <Plug>(lsp-float-close)
 
 nmap <silent> <A-h> :wincmd h<CR>
 nmap <silent> <A-j> :wincmd j<CR>
 nmap <silent> <A-k> :wincmd k<CR>
 nmap <silent> <A-l> :wincmd l<CR>
 
-"inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
-
-"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-
 "Commands --------------------------------------------------
 
 command! SS echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 command! -nargs=1 -complete=help Help :tabnew | :enew | :set buftype=help | :h <args>
-command MakeTags !ctags -R .
+command MakeTags !ctags -R --c++-kinds=+p --fields=iaS --extra=+q . 
 
 "Status ----------------------------------------------------
 
 set statusline=
 set statusline+=\
 
+"The void" -------------------------------------------------
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua requre('telescope.builtin').help_tags()<cr>
 
-
 let g:vimspector_enable_mappings = 'HUMAN'
 packadd! vimspector
 
 let g:airline#extensions#tabline#enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
+
+set omnifunc=syntaxcomplete#Complete
+"inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+"
+"
+"
+
+"The Lua pit"
+lua<<EOF
+require('telescope').setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+}
+require('telescope').load_extension('fzf')
+EOF
