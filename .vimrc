@@ -89,8 +89,9 @@ let g:NERDCompactSexyComs = 1
 let g:floaterm_keymap_toggle = '<F1>'
 
 "Paren completion
-inoremap { {<CR>}<Esc>ko
-inoremap {{ {}<Esc>ha
+inoremap { {}<Esc>ha
+inoremap {{ <CR>}<Esc>ko
+
 inoremap ( ()<Esc>ha
 inoremap [ []<Esc>ha
 inoremap " ""<Esc>ha
@@ -140,11 +141,8 @@ let g:airline#extensions#tabline#enabled = 1
 
 set omnifunc=syntaxcomplete#Complete
 "inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
-"
-"
-"
 
-"The Lua pit"
+"The Lua pit
 lua<<EOF
 require('telescope').setup {
   extensions = {

@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=2000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt autocd extendedglob nomatch
 unsetopt beep
 bindkey -v
@@ -17,14 +17,16 @@ compinit
 
 #alias ls="sl" - Uncommentting this will break these aliases.  Fix it.
 #ls () { command sl "$@" ;}
-alias ls='ls -h --color=auto'
-alias la='ls -alF --color=auto'
+alias ls='ls -h --color=auto --group-directories-first'
+alias la='ls -alF --color=auto --group-directories-first'
 alias ll='ls -A --color=auto'
 alias l='ls -CF --color=auto'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias tb="nc termbin.com 9999"
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias pingtest="ping -c 5 google.com"
+alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'"
+alias dirsize='sudo du -sh $PWD/*'
 autoload -U colors && colors
 #Prompt
 PS1="%T%{$fg[magenta]%}|%n%{$reset_color%}@%{$fg[blue]%}%m|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}|%"
