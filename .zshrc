@@ -18,8 +18,8 @@ compinit
 #alias ls="sl" - Uncommentting this will break these aliases.  Fix it.
 #ls () { command sl "$@" ;}
 alias ls='ls -h --color=auto --group-directories-first'
-alias la='ls -alF --color=auto --group-directories-first'
-alias ll='ls -A --color=auto'
+alias la='ls -alF'
+alias ll='ls -A'
 alias l='ls -CF --color=auto'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias tb="nc termbin.com 9999"

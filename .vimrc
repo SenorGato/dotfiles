@@ -16,9 +16,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'sheerun/vim-polyglot'
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'sheerun/vim-polyglot'
 Plug 'BurntSushi/ripgrep'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -90,7 +89,7 @@ let g:floaterm_keymap_toggle = '<F1>'
 
 "Paren completion
 inoremap { {}<Esc>ha
-inoremap {{ <CR>}<Esc>ko
+inoremap {{ {<CR>}<Esc>ko
 
 inoremap ( ()<Esc>ha
 inoremap [ []<Esc>ha
@@ -101,6 +100,7 @@ inoremap ` ``<Esc>ha
 nnoremap <Leader>ss :SaveSession<CR> 
 nnoremap <Leader>os :OpenSession<CR>
 :let g:session_autosave = 'no'
+
 
 nnoremap <leader>lo :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>lp :YcmCompleter GoToDecleration<cr>
@@ -157,3 +157,60 @@ require('telescope').setup {
 }
 require('telescope').load_extension('fzf')
 EOF
+"
+"
+""" session auto-saving and things
+    "set sessionoptions=blank,buffers,curdir,folds,help,options,tabpages,winsize
+    "if has("unix") || &shellslash | let s:pathsep = '/' | else | let s:pathsep = '\' | endif
+    "let g:session_file = join([getcwd(),".vim.session"], s:pathsep)
+    "if (argc() == 0) && empty(v:this_session) && filereadable(g:session_file)
+    "    let g:session = 1
+    "else
+    "    let g:session = 0
+    "endif
+    "
+    "function! Session_save(filename)
+    "    if g:session > 0
+    "        echomsg 'Saving current session to ' . a:filename
+    "        execute 'mksession! ' . a:filename
+    "        if !filewritable(a:filename)
+    "            echoerr 'Unable to save current session to ' . a:filename
+    "        endif
+    "    endif
+    "endfunction
+    "
+    "function! Session_load(filename)
+    "    if g:session > 0
+    "        echomsg 'Loading session from ' . a:filename
+    "        if filereadable(a:filename)
+    "            execute 'source ' . a:filename
+    "        endif
+    "    endif
+    "endfunction
+    "
+    "augroup session
+    "    autocmd!
+    "    autocmd VimEnter * call Session_load(g:session_file)
+    "    autocmd VimLeave * call Session_save(g:session_file)
+    "augroup end
+    "
+    "
+fu! SaveSess()
+    execute 'mksession! ' . getcwd() . '/.session.vim'
+endfunction
+
+fu! RestoreSess()
+if filereadable(getcwd() . '/.session.vim')
+    execute 'so ' . getcwd() . '/.session.vim'
+    if bufexists(1)
+        for l in range(1, bufnr('$'))
+            if bufwinnr(l) == -1
+                exec 'sbuffer ' . l
+            endif
+        endfor
+    endif
+endif
+endfunction
+
+autocmd VimLeave * call SaveSess()
+autocmd VimEnter * nested call RestoreSess()
