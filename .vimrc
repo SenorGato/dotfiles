@@ -3,6 +3,8 @@
 "Html tag completion
 "Fix code completion/snippets
 "Folding
+"Configure arduino bindings
+"Work on understanding vimspector/better debugging
 
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -17,12 +19,13 @@ Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'stevearc/vim-arduino'
 "Plug 'sheerun/vim-polyglot'
-Plug 'BurntSushi/ripgrep'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do' : 'make'}
+"Plug 'BurntSushi/ripgrep'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do' : 'make'}
 "Plug 'tpope/vim-fugitive'
 
 call plug#end()
@@ -83,7 +86,6 @@ nnoremap <leader>n/ :NERDTreeFind
 let g:NERDCreateDefaultMappings = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
-let g:NERDCompactSexyComs = 1
 
 let g:floaterm_keymap_toggle = '<F1>'
 
@@ -143,20 +145,20 @@ set omnifunc=syntaxcomplete#Complete
 "inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
 
 "The Lua pit
-lua<<EOF
-require('telescope').setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
-}
-require('telescope').load_extension('fzf')
-EOF
+"lua<<EOF
+"require('telescope').setup {
+"  extensions = {
+"    fzf = {
+"      fuzzy = true,                    -- false will only do exact matching
+"      override_generic_sorter = true,  -- override the generic sorter
+"      override_file_sorter = true,     -- override the file sorter
+"      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+"                                       -- the default case_mode is "smart_case"
+"    }
+"  }
+"}
+"require('telescope').load_extension('fzf')
+"EOF
 "
 "
 """ session auto-saving and things
@@ -195,22 +197,22 @@ EOF
     "augroup end
     "
     "
-fu! SaveSess()
-    execute 'mksession! ' . getcwd() . '/.session.vim'
-endfunction
-
-fu! RestoreSess()
-if filereadable(getcwd() . '/.session.vim')
-    execute 'so ' . getcwd() . '/.session.vim'
-    if bufexists(1)
-        for l in range(1, bufnr('$'))
-            if bufwinnr(l) == -1
-                exec 'sbuffer ' . l
-            endif
-        endfor
-    endif
-endif
-endfunction
-
-autocmd VimLeave * call SaveSess()
-autocmd VimEnter * nested call RestoreSess()
+"fu! SaveSess()
+"    execute 'mksession! ' . getcwd() . '/.session.vim'
+"endfunction
+"
+"fu! RestoreSess()
+"if filereadable(getcwd() . '/.session.vim')
+"    execute 'so ' . getcwd() . '/.session.vim'
+"    if bufexists(1)
+"        for l in range(1, bufnr('$'))
+"            if bufwinnr(l) == -1
+"                exec 'sbuffer ' . l
+"            endif
+"        endfor
+"    endif
+"endif
+"endfunction
+"
+"autocmd VimLeave * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()

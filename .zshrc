@@ -29,7 +29,7 @@ alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bol
 alias dirsize='sudo du -sh $PWD/*'
 autoload -U colors && colors
 #Prompt
-PS1="%T%{$fg[magenta]%}|%n%{$reset_color%}@%{$fg[blue]%}%m|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}|%"
+PS1="%T%{$fg[magenta]%}|%n%{$reset_color%}@%{$fg[blue]%}%m|%{$fg[green]%}%~|%{$reset_color%}%{$fg[white]%}%"
 #export PS1="%T|%n@%m|%~$ "
 
 #Env Vars
