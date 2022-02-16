@@ -22,6 +22,8 @@ alias ls='ls -h --color=auto --group-directories-first'
 alias la='ls -alF'
 alias ll='ls -A'
 alias l='ls -CF --color=auto'
+alias less='less -R'
+alias watch='watch --color'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias tb="nc termbin.com 9999"
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
@@ -34,7 +36,7 @@ alias dirsize='sudo du -sh $PWD/*'
 setopt PROMPT_SUBST
 export KEYTIMEOUT=1
 
-PS1='%T%F{5}|%n%{$reset_color%}@%F{21}%m%f|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
+PS1='%T%F{13}|%n%{$reset_color%}@%F{25}%m%f|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
 #PS1='%T%{$fg[magenta]%}|%n%{$reset_color%}@%F{21}%m%f|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
 
 RPROMPT='%F{57}${vcs_info_msg_0_}%f%b'
