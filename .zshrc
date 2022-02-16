@@ -5,6 +5,7 @@ setopt autocd extendedglob nomatch
 unsetopt beep
 bindkey -v
 REPORTTIME=20
+setopt +o nomatch
 
 zstyle :compinstall filename '/home/senoraraton/.zshrc'
 zstyle ':vcs_info:git:*' formats '[%b]'
@@ -36,7 +37,7 @@ alias dirsize='sudo du -sh $PWD/*'
 setopt PROMPT_SUBST
 export KEYTIMEOUT=1
 
-PS1='%T%F{13}|%n%{$reset_color%}@%F{25}%m%f|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
+PS1='%T%F{13}|%n%{$reset_color%}@%F{25}%m|%f%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
 #PS1='%T%{$fg[magenta]%}|%n%{$reset_color%}@%F{21}%m%f|%{$fg[green]%}%~%{$reset_color%}%{$fg[white]%}${vim_mode}%'
 
 RPROMPT='%F{57}${vcs_info_msg_0_}%f%b'
@@ -67,3 +68,4 @@ export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export GOPATH=/home/senoraraton/.config/go
 export PATH="$PATH:$HOME/.config/go/bin"
 
+#source ~/scripts/Stone/stonerefresh.sh

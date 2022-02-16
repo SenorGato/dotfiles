@@ -5,7 +5,7 @@
 "Folding
 "Configure arduino bindings
 "Work on understanding vimspector/better debugging
-
+"Shellcheck, and setting up Bash working environment"
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
 
