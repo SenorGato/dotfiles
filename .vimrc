@@ -67,7 +67,7 @@ highlight Pmenu ctermbg=234 ctermfg=105
 highlight lspReference cterm=underline
 
 "Turns off preview in youcomplete
-set completeopt-=preview
+"set completeopt-=preview
 
 "Floaterm Inits
 autocmd VimEnter *.js,*.html,*.css,*.ts :FloatermNew! --silent --name=webserve --cwd=<root> python3 -m http.server 8000
