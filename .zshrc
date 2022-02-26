@@ -29,6 +29,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias tb="nc termbin.com 9999"
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias pingtest="ping -c 5 google.com"
+alias pingdns="ping -c 5 8.8.8.8"
 alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'"
 alias dirsize='sudo du -sh $PWD/*'
 

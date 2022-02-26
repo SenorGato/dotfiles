@@ -1,6 +1,5 @@
 "Vim Wishlist ---------------------------------------------
 "Comprehend linters, and why we should want them.
-"Html tag completion
 "Fix code completion/snippets
 "Folding
 "Configure arduino bindings
@@ -20,6 +19,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'stevearc/vim-arduino'
+Plug 'alvan/vim-closetag'
 "Plug 'sheerun/vim-polyglot'
 "Plug 'BurntSushi/ripgrep'
 "Plug 'nvim-lua/plenary.nvim'
@@ -142,6 +142,11 @@ packadd! vimspector
 let g:airline#extensions#tabline#enabled = 1
 
 set omnifunc=syntaxcomplete#Complete
+
+let g:closetag_filenames = '*.html, *.xhtml, *.phtml'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_close_shortcut = '<leader>>'
+
 "inoremap <expr> <Tab> pumvisible() ? '<C-n>' : getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
 
 "The Lua pit
