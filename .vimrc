@@ -5,6 +5,8 @@
 "Configure arduino bindings
 "Work on understanding vimspector/better debugging
 "Shellcheck, and setting up Bash working environment"
+"Write binding to replace ("{[]}") With current highlighted and next occurence
+"
 "Plugins ---------------------------------------------------
 call plug#begin('~/.vim/plugged')
 

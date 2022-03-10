@@ -31,7 +31,7 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias pingtest="ping -c 5 google.com"
 alias pingdns="ping -c 5 8.8.8.8"
 alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'"
-alias dirsize='sudo du -sh $PWD/*'
+alias dirsize='du -sh $PWD/*'
 
 #Prompt
 
@@ -70,3 +70,8 @@ export GOPATH=/home/senoraraton/.config/go
 export PATH="$PATH:$HOME/.config/go/bin"
 
 #source ~/scripts/Stone/stonerefresh.sh
+#
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
