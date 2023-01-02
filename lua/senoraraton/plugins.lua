@@ -63,15 +63,14 @@ return packer.startup(function(use)
     use { 'mbbill/undotree'}
     use { 'tpope/vim-fugitive'}
     use "mattn/emmet-vim"
-    use 'rmagatti/auto-session'
-    use { 'rmagatti/session-lens',
-        requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'}}
-
+    --use 'rmagatti/auto-session'
+    --use { 'rmagatti/session-lens',
+        --requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'}}
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
     -- LSP
     use "williamboman/mason.nvim" -- simple to use language server installer
     use "neovim/nvim-lspconfig" -- enable LSP
     use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
-    use 'jose-elias-alvarez/null-ls.nvim' -- LSP diagnostics and code actions
     use 'LnL7/vim-nix' -- Nix LSP
 
     --Golang
@@ -96,6 +95,18 @@ return packer.startup(function(use)
 
     --Debugger
     use 'mfussenegger/nvim-dap'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
+
+    --Formatters
+    use('MunifTanjim/prettier.nvim')
+    use ({
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            require("null-ls").setup()
+        end,
+        requires = { "nvim-lua/plenary.nvim"},
+    })
+
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

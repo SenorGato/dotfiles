@@ -8,6 +8,47 @@ vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil,nil, vim
 vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<cr>")
 
 local dap = require('dap')
+
+require("dapui").setup()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--dap.adapters.firefox = {
+    --type = 'executable',
+    --command = 'node',
+    --args = {'/nix/store/4sfmznxj9cv005752s1whr6d0njjikx1-vscode-extension-firefox-devtools-vscode-firefox-debug-2.9.8/share/vscode/extensions/firefox-devtools.vscode-firefox-debug/dist/adapter.bundle.js'},
+--}
+--
+--dap.configurations.typescript = {
+    --{
+    --name = 'Debug with Firefox',
+    --type = 'firefox',
+    --request = 'launch',
+    --reAttach = true,
+    --url = 'http://localhost:3000/',
+    --webRoot = '${workspaceFolder}',
+    --firefoxExecutable = '/nix/store/vpjaaamkj5cv6v12xy61kkl7pd3117a4-user-environment/bin/firefox',
+    --}
+--}
+
+
+
+
+
+
+
+
 dap.adapters.lldb = {
   type = 'executable',
   command = '/nix/store/w83qccsvplv3brqs5cnirs3x0c45pq76-system-path/bin/lldb', -- adjust as needed, must be absolute path

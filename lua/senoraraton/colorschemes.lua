@@ -1,8 +1,0 @@
-vim.cmd [[colorscheme tokyonight-moon]]
-vim.cmd [[highlight LineNr ctermfg=140]]
-vim.cmd [[highlight Normal ctermfg=105 ctermbg=234]]
-vim.cmd [[highlight vimVar ctermfg=41]]
-vim.cmd [[highlight vimVar ctermfg=41]]
-vim.cmd [[highlight Pmenu ctermbg=234 ctermfg=105]]
-vim.cmd [[highlight lspReference cterm=underline]]
-vim.cmd [[highlight EndOfBuffer ctermbg = blue]]

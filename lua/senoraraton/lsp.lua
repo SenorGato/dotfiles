@@ -1,30 +1,80 @@
+local keymaps = require ("keymaps")
+
 require ("mason").setup()
 require ("mason-lspconfig").setup()
 
+local null_ls_status_ok, null_ls = pcall(require, "null-ls")
+if not null_ls_status_ok then
+    return
+end
 
-vim.diagnostic.config({
-    virtual_text = false,
-    signs = true,
-    float = { source = "always", border = "single" },
-})
+local on_attach = keymaps.lsp_on_attach(_,bufnr)
+
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+local completion = null_ls.builtins.completion
+local code_actions = null_ls.builtins.code_actions
+local hover = null_ls.builtins.hover
+
+local language_servers = {
+    'clangd',
+    'tsserver',
+    'dockerls',
+    'rust_analyzer',
+    'bashls',
+    'svelte',
+    'gopls',
+    'cmake',
+    'graphql',
+    'tsserver',
+    'jsonls',
+    'cssls',
+    'html',
+}
+
+local null_ls_servers = {
+    --C++
+    diagnostics.clang_check,
+    diagnostics.cppcheck,
+    diagnostics.cpplint,
+    diagnostics.cmake_lint,
+    diagnostics.checkmake,
+    --Typescript/Javascript
+    code_actions.eslint_d,
+    formatting.prettier,
+    diagnostics.jsonlint,
+    --NixOs
+    diagnostics.deadnix,
+    formatting.alejandra,
+    code_actions.statix,
+    --Lua
+    completion.luasnip,
+    diagnostics.luacheck,
+    formatting.stylua,
+    --Golang
+    formatting.gofumpt,
+    formatting.goimports,
+    --Misc
+    completion.spell,
+    code_actions.shellcheck,
+    diagnostics.dotenv_linter, -- .env Linter
+    diagnostics.vint, -- Vimscript Linter
+    diagnostics.yamllint, -- Yaml Linter
+    diagnostics.hadolint, -- Docker Linter
+}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+for _, ls in ipairs(language_servers) do
+    require('lspconfig')[ls].setup({
+        capabilities = capabilities,
+        on_attach = on_attach
+    })
+end
 
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-    vim.keymap.set("n", "gd", ':vsplit | lua vim.lsp.buf.definition()<cr>, bufopts')
-    vim.keymap.set("n", "gdd", ':belowright split | lua vim.lsp.buf.definition()<cr>, bufopts')
-    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set("n", "dn", vim.diagnostic.goto_next, bufopts)
-    vim.keymap.set("n", "dp", vim.diagnostic.goto_prev, bufopts)
-    vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<cr>", bufopts)
-    vim.keymap.set("n", "vr", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "pp", vim.lsp.buf.code_action, bufopts)
+for _, nls in ipairs(null_ls_servers) do
+    null_ls.register({nls})
 end
 
 require'lspconfig'.sumneko_lua.setup {
@@ -39,16 +89,13 @@ require'lspconfig'.sumneko_lua.setup {
     },
   },
 }
-require'lspconfig'.clangd.setup{ on_attach = on_attach, }
-require'lspconfig'.tsserver.setup{ on_attach = on_attach, }
-require'lspconfig'.dockerls.setup{ on_attach = on_attach, }
-require'lspconfig'.rust_analyzer.setup{ on_attach = on_attach, }
-require'lspconfig'.bashls.setup{ on_attach = on_attach, }
-require'lspconfig'.svelte.setup{ on_attach = on_attach, }
-require'lspconfig'.gopls.setup{ on_attach = on_attach, }
-require'lspconfig'.cmake.setup{ on_attach = on_attach, }
-require'lspconfig'.graphql.setup{ on_attach = on_attach, }
-require'lspconfig'.jsonls.setup { on_attach = on_attach,  capabilities = capabilities, }
-require'lspconfig'.cssls.setup {  on_attach = on_attach, capabilities = capabilities, }
-require'lspconfig'.html.setup {  on_attach = on_attach, capabilities = capabilities, }
+
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').goimport()
+  end,
+  group = format_sync_grp,
+})
 require('go').setup()

@@ -1,5 +1,5 @@
 --Chosing window changing paradigm.  Ctrl-w sucks. Alt sucks Ctrl + hjkl overwrites the ability to use hotkeys, did this cause collisions?
-
+local keymaps = {}
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true}
 local keymap = vim.api.nvim_set_keymap
@@ -49,4 +49,22 @@ keymap("i", "`", "``<Esc>ha", opts)
 
 --Sessions
 
---keymap("n", "<leader>zs", ":toggle_session()", opts)
+
+-- LSP
+
+function keymaps.lsp_on_attach(_,bufnr)
+    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "gd", ':vsplit | lua vim.lsp.buf.definition()<cr>, bufopts')
+    vim.keymap.set("n", "gdd", ':belowright split | lua vim.lsp.buf.definition()<cr>, bufopts')
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "dn", vim.diagnostic.goto_next, bufopts)
+    vim.keymap.set("n", "dp", vim.diagnostic.goto_prev, bufopts)
+    vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<cr>", bufopts)
+    vim.keymap.set("n", "vr", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "pp", vim.lsp.buf.code_action, bufopts)
+end
+
+return keymaps
