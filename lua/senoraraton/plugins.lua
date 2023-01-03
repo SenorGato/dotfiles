@@ -80,6 +80,7 @@ return packer.startup(function(use)
     use "hrsh7th/cmp-cmdline" -- cmdline completions
     use "hrsh7th/nvim-cmp" -- The completion plugin
     use "hrsh7th/cmp-nvim-lua"
+    use "alvan/vim-closetag"
 
     -- snippets
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
@@ -92,6 +93,7 @@ return packer.startup(function(use)
     --Debugger
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
+    use 'theHamsta/nvim-dap-virtual-text'
 
     --Formatters
     use('MunifTanjim/prettier.nvim')
