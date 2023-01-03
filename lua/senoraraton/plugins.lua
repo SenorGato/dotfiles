@@ -50,6 +50,8 @@ return packer.startup(function(use)
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
+    --use { 'sharkdp/fd'}
+    --use { 'BurntSushi/ripgrep'}
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-treesitter/playground' }
 
@@ -58,15 +60,9 @@ return packer.startup(function(use)
 
     use "voldikss/vim-floaterm"
     use "scrooloose/nerdcommenter"
-    use { 'sharkdp/fd'}
-    use { 'BurntSushi/ripgrep'}
     use { 'mbbill/undotree'}
     use { 'tpope/vim-fugitive'}
     use "mattn/emmet-vim"
-    --use 'rmagatti/auto-session'
-    --use { 'rmagatti/session-lens',
-        --requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'}}
-    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
     -- LSP
     use "williamboman/mason.nvim" -- simple to use language server installer
     use "neovim/nvim-lspconfig" -- enable LSP
@@ -99,13 +95,17 @@ return packer.startup(function(use)
 
     --Formatters
     use('MunifTanjim/prettier.nvim')
-    use ({
-        "jose-elias-alvarez/null-ls.nvim",
+    use ({ "jose-elias-alvarez/null-ls.nvim",
         config = function()
             require("null-ls").setup()
         end,
         requires = { "nvim-lua/plenary.nvim"},
     })
+    --Todo:
+    --use 'rmagatti/auto-session'
+    --use { 'rmagatti/session-lens',
+        --requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'}}
+    --use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
 
   -- Automatically set up your configuration after cloning packer.nvim

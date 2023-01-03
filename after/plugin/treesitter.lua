@@ -8,7 +8,7 @@ require'nvim-treesitter.configs'.setup {
                         "css",
                         "diff",
                         "dockerfile",
-                        --"gitignore",
+                        "gitignore",
                         "go",
                         "gomod",
                         "graphql",
@@ -31,7 +31,7 @@ require'nvim-treesitter.configs'.setup {
                         "vim",
                         "vue",
                         "query",
-                        "yaml" 
+                        "yaml",
   },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)

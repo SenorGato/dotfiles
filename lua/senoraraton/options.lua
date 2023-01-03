@@ -49,15 +49,24 @@ vim.diagnostic.config({
     float = { source = "always", border = "single" },
 })
 --Colorscheme
+require("tokyonight").setup({
+    style = "moon",
+    transparent = false,
+    terminals_colors = true,
+    styles = {
+        comments = { italic = true},
+        keywords = { italic = true},
+        sidebars = "dark",
+        floats = "dark",
+    },
+    hide_inactive_statusline = false,
+    on_highlights = function(hl, _)
+        hl.LineNr = { fg = "#af87d7",}
+    end,
 
+})
 vim.cmd [[colorscheme tokyonight-moon]]
---vim.cmd [[highlight LineNr ctermfg=140]]
---vim.cmd [[highlight Normal ctermfg=105 ctermbg=234]]
---vim.cmd [[highlight vimVar ctermfg=41]]
---vim.cmd [[highlight vimVar ctermfg=41]]
---vim.cmd [[highlight Pmenu ctermbg=234 ctermfg=105]]
---vim.cmd [[highlight lspReference cterm=underline]]
---vim.cmd [[highlight EndOfBuffer ctermbg = blue]]
+
 
 -- Floatterm Inits
 
@@ -71,43 +80,7 @@ vim.cmd [[autocmd BufWrite *.cpp,*h :FloatermSend --silent --name=main make]]
 vim.cmd[[command! -nargs=1 -complete=help Help :tabnew | :enew | :set buftype=help | :h <args>]]
 vim.cmd[[command! SS echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')]]
 
---Sessions
-
---local session_opts = {
-  --log_level = 'info',
-  --auto_session_enable_last_session = false,
-  --auto_session_root_dir = vim.fn.stdpath('data').."/sessions/",
-  --auto_session_enabled = true,
-  ----auto_save_enabled = nil,
-  ----auto_restore_enabled = nil,
-  ----auto_session_suppress_dirs = nil,
-  --auto_session_use_git_branch = nil,
-  ----auto_session_create_enabled = true,
-  ---- the configs below are lua only
-  --bypass_session_save_file_types = nil
---}
---
---function _G.close_all_floating_wins()
-  --for _, win in ipairs(vim.api.nvim_list_wins()) do
-    --local config = vim.api.nvim_win_get_config(win)
-    --if config.relative ~= '' then
-      --vim.api.nvim_win_close(win, false)
-    --end
-  --end
---end
-
-
---require('auto-session').setup{
-    --session_opts,
-    --pre_save_cmds = { _G.close_all_floating_wins },
---}
---require('session-lens').setup {
-    --prompt_title = 'Saison',
-    --path_display = {'shorten'},
---}
-
 --LuaLine
-
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -149,13 +122,3 @@ require('lualine').setup {
   inactive_winbar = {},
   extensions = {}
 }
-
-
-
-
-
-
-
-
-
-

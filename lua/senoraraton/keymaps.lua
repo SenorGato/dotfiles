@@ -1,4 +1,3 @@
---Chosing window changing paradigm.  Ctrl-w sucks. Alt sucks Ctrl + hjkl overwrites the ability to use hotkeys, did this cause collisions?
 local keymaps = {}
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true}
@@ -46,9 +45,6 @@ keymap("i", "[", "[]<Esc>ha", opts)
 keymap("i", '"', '""<Esc>ha', opts)
 keymap("i", "'", "''<Esc>ha", opts)
 keymap("i", "`", "``<Esc>ha", opts)
-
---Sessions
-
 
 -- LSP
 
