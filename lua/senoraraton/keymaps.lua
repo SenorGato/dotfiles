@@ -15,7 +15,7 @@ keymap("n", "<A-h>", ":wincmd h<CR>", opts)
 keymap("n", "<A-j>", ":wincmd j<CR>", opts)
 keymap("n", "<A-k>", ":wincmd k<CR>", opts)
 keymap("n", "<A-l>", ":wincmd l<CR>", opts)
-keymap("n", "<leader>e", ":Lex 10<cr>", opts)
+keymap("n", "<leader>e", ":Lex 10<cr><cr>", opts)
 
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
@@ -24,9 +24,9 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 --Visual
 
---Hold buffer on paste
-vim.cmd[[xnoremap <expr> p 'pgv"'.v:register.'y`>']]
-vim.cmd[[xnoremap <expr> P 'Pgv"'.v:register.'y`>']]
+--Hold buffer on yank/paste
+vim.keymap.set("x", "P", function() return 'Pgv"' .. vim.v.register .. "y" end, { remap = false, expr = true })
+vim.keymap.set("x", "P", function() return 'Pgv"' .. vim.v.register .. "y" end, { remap = false, expr = true })
 
 --Stay in indent mode
 keymap("v", "<", "<gv", opts)
@@ -43,24 +43,24 @@ keymap("i", "[", "[]<Esc>ha", opts)
 keymap("i", '"', '""<Esc>ha', opts)
 keymap("i", "'", "''<Esc>ha", opts)
 keymap("i", "`", "``<Esc>ha", opts)
-vim.cmd[[:inoremap <expr> ; search('\%#[]>)}]', 'n') ? '<Right>' : ';']]
--- LSP
+vim.cmd[[:inoremap <expr> ; search('\%#[]>)}''"]', 'n') ? '<Right>' : ';']]
 
-function keymaps.lsp_on_attach(_,bufnr)
+-- LSP
+function keymaps.lsp_maps(_,bufnr)
     vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-    vim.keymap.set("n", "gd", ':vsplit | lua vim.lsp.buf.definition()<cr>, bufopts')
-    vim.keymap.set("n", "gdd", ':belowright split | lua vim.lsp.buf.definition()<cr>, bufopts')
-    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "ds", ':vsplit | lua vim.lsp.buf.definition()<cr>, bufopts')
+    vim.keymap.set("n", "df", ':belowright split | lua vim.lsp.buf.definition()<cr>, bufopts')
+    vim.keymap.set("n", "dt", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "di", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "dn", vim.diagnostic.goto_next, bufopts)
     vim.keymap.set("n", "dp", vim.diagnostic.goto_prev, bufopts)
     vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<cr>", bufopts)
     vim.keymap.set("n", "vr", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "pp", vim.lsp.buf.code_action, bufopts)
 end
-
+-- DaP
 function keymaps.dap_maps()
     vim.keymap.set("n", "<F4>", ":lua require('dapui').open()<cr>")
     vim.keymap.set("n", "<F5>", ":lua require('dap').continue()<cr>")

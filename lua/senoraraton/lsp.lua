@@ -8,7 +8,7 @@ if not null_ls_status_ok then
     return
 end
 
-local on_attach = keymaps.lsp_on_attach(_,bufnr)
+local on_attach = keymaps.lsp_maps(_,bufnr)
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
