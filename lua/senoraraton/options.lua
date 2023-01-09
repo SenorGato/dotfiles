@@ -32,7 +32,9 @@ local options = {
     termguicolors = true,
     mouse = "",
     sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
+    completeopt = "menu,menuone,noselect"
 }
+
 for k, v in pairs(options) do
     vim.opt[k] = v
 end

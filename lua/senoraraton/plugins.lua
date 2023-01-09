@@ -62,7 +62,6 @@ return packer.startup(function(use)
     use "scrooloose/nerdcommenter"
     use { 'mbbill/undotree'}
     use { 'tpope/vim-fugitive'}
-    use "mattn/emmet-vim"
     -- LSP
     use "williamboman/mason.nvim" -- simple to use language server installer
     use "neovim/nvim-lspconfig" -- enable LSP
@@ -80,21 +79,18 @@ return packer.startup(function(use)
     use "hrsh7th/cmp-cmdline" -- cmdline completions
     use "hrsh7th/nvim-cmp" -- The completion plugin
     use "hrsh7th/cmp-nvim-lua"
-    use "alvan/vim-closetag"
 
-    -- snippets
+    --Snippets
     use "saadparwaiz1/cmp_luasnip" -- snippet completions
-    use "L3MON4D3/LuaSnip" --snippet engine
+    use ({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"}) --snippet engine
     use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
-
-  -- Colorschemes
+    --Colorschemes
     use 'folke/tokyonight.nvim'
-
     --Debugger
     use 'mfussenegger/nvim-dap'
+    use { "jbyuki/one-small-step-for-vimkind", requires = {"mfussenegger/nvim-dap"}}
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
     use 'theHamsta/nvim-dap-virtual-text'
-
     --Formatters
     use('MunifTanjim/prettier.nvim')
     use ({ "jose-elias-alvarez/null-ls.nvim",
@@ -103,6 +99,9 @@ return packer.startup(function(use)
         end,
         requires = { "nvim-lua/plenary.nvim"},
     })
+    --Misc
+    use "alvan/vim-closetag"
+    use "mattn/emmet-vim"
     --Todo:
     --use 'rmagatti/auto-session'
     --use { 'rmagatti/session-lens',

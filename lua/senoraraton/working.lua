@@ -1,5 +1,49 @@
 --CMP
+func
+k
 
+local cmp = require'cmp'
+
+cmp.setup({
+    expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+    end,
+    window = {
+        completion = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-k"] = cmp.mapping.select_prev_item(),
+        ["<C-j"] = cmp.mapping.select_next_item(),
+        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+        ["<Tab>"] = cmp.mapping.confirm { select = true },
+        ["<C-e>"] = cmp.mapping {
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        },
+    }),
+    sources = cmp.config.sources({
+        {name = 'nvim_lsp'},
+        {name = 'luasnip'},
+        {name = 'buffer'},
+        {name = 'path'},
+    }, {
+        {name = 'buffer'},
+    }),
+    formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      vim_item.menu = ({
+        nvim_lsp = "[LSP]",
+        luasnip = "[Snippet]",
+        buffer = "[Buffer]",
+        path = "[Path]",
+      })[entry.source.name]
+      return vim_item
+    end,
+    },
+})
 
 
 

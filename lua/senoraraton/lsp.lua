@@ -30,6 +30,7 @@ local language_servers = {
     'jsonls',
     'cssls',
     'html',
+    --'sqls'
 }
 
 local null_ls_servers = {
@@ -63,8 +64,10 @@ local null_ls_servers = {
     diagnostics.hadolint, -- Docker Linter
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+--local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+--capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 
 for _, ls in ipairs(language_servers) do
     require('lspconfig')[ls].setup({
