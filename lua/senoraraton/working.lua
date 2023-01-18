@@ -1,6 +1,4 @@
 --CMP
-func
-k
 
 local cmp = require'cmp'
 

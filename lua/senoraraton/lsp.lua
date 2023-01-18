@@ -26,7 +26,6 @@ local language_servers = {
     'gopls',
     'cmake',
     'graphql',
-    'tsserver',
     'jsonls',
     'cssls',
     'html',
@@ -91,6 +90,19 @@ require'lspconfig'.sumneko_lua.setup {
       telemetry = {enable = false,},
     },
   },
+}
+
+require'lspconfig'.terraformls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = {"tf"},
+}
+
+
+require'lspconfig'.tflint.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = {"tf"},
 }
 
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})

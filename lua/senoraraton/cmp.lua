@@ -8,7 +8,6 @@ if not snip_status_ok then
   return
 end
 
-local
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local check_backspace = function()
@@ -35,11 +34,11 @@ cmp.setup {
     },
     -- Acept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    --["<Cr>"] = cmp.mapping.confirm { select = true },
+    ["<Cr>"] = cmp.mapping.confirm { select = false },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.mapping.confirm { select = true }
-        --cmp.select_next_item()
+        --cmp.mapping.confirm { select = true }
+        cmp.select_next_item()
       elseif luasnip.expandable() then
         luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
