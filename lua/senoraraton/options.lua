@@ -67,7 +67,11 @@ require("tokyonight").setup({
     end,
 
 })
-vim.cmd [[colorscheme tokyonight-moon]]
+require("rose-pine").setup({
+    dark_variant = 'moon',
+})
+
+vim.cmd [[colorscheme space_vim_theme]]
 
 --LuaLine
 require('lualine').setup {
